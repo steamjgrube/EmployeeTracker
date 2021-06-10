@@ -1,12 +1,13 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+// const connection = require('./connect/connection.js')
 require("console.table");
 
 var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
-  user: "root",
-  password: "password",
+  user: "root", //Add your username here!!
+  password: "password", //Add your password here!!
   database: "employeeTrackerDB"
 });
 
@@ -21,7 +22,7 @@ function initialPrompt() {
     .prompt({
       type: "list",
       name: "task",
-      message: "Would you like to do?",
+      message: "Welcome to EmployeeTracker! What would you like to do?",
       choices: [
         "View all Employees",
         "View all Employees by Department",
