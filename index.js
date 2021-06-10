@@ -109,12 +109,12 @@ function byDepartment() {
     console.table(res);
     console.log("Department view succeed!\n");
 
-    promptDepartment(departmentChoices);
+    viewDepartments(departmentChoices);
   });
 }
 
 
-function promptDepartment(departmentChoices) {
+function viewDepartments(departmentChoices) {
 
   inquirer
     .prompt([
@@ -158,18 +158,18 @@ function newEmployee() {
   connection.query(query, function (err, res) {
     if (err) throw err;
 
-    const roleChoices = res.map(({ id, title, salary }) => ({
+    const choices = res.map(({ id, title, salary }) => ({
       value: id, title: `${title}`, salary: `${salary}`
     }));
 
     console.table(res);
     console.log("RoleToInsert!");
 
-    promptInsert(roleChoices);
+    newemployeePrompt(choices);
   });
 }
 
-function promptInsert(roleChoices) {
+function newemployeePrompt(choices) {
 
   inquirer
     .prompt([
@@ -187,7 +187,7 @@ function promptInsert(roleChoices) {
         type: "list",
         name: "roleId",
         message: "What is the employee's role?",
-        choices: roleChoices
+        choices: choices
       },
     ])
     .then(function (answer) {
@@ -231,12 +231,12 @@ function removeEmployees() {
     console.table(res);
     console.log("ArrayToDelete!\n");
 
-    promptDelete(deleteEmployeeChoices);
+    deleteemployeePrompt(deleteEmployeeChoices);
   });
 }
 
 
-function promptDelete(deleteEmployeeChoices) {
+function deleteemployeePrompt(deleteEmployeeChoices) {
 
   inquirer
     .prompt([
@@ -300,23 +300,23 @@ function roleArray(employeeChoices) {
   var query =
     `SELECT r.id, r.title, r.salary 
   FROM role r`
-  let roleChoices;
+  let choices;
 
   connection.query(query, function (err, res) {
     if (err) throw err;
 
-    roleChoices = res.map(({ id, title, salary }) => ({
+    choices = res.map(({ id, title, salary }) => ({
       value: id, title: `${title}`, salary: `${salary}`      
     }));
 
     console.table(res);
     console.log("roleArray to Update!\n")
 
-    promptEmployeeRole(employeeChoices, roleChoices);
+    promptEmployeeRole(employeeChoices, choices);
   });
 }
 
-function promptEmployeeRole(employeeChoices, roleChoices) {
+function promptEmployeeRole(employeeChoices, choices) {
 
   inquirer
     .prompt([
@@ -330,7 +330,7 @@ function promptEmployeeRole(employeeChoices, roleChoices) {
         type: "list",
         name: "roleId",
         message: "Which role do you want to update?",
-        choices: roleChoices
+        choices: choices
       },
     ])
     .then(function (answer) {
@@ -386,12 +386,12 @@ function promptAddRole(departmentChoices) {
       {
         type: "input",
         name: "roleTitle",
-        message: "Role title?"
+        message: "What is the title of this role?"
       },
       {
         type: "input",
         name: "roleSalary",
-        message: "Role Salary"
+        message: "What is the salary of this role?"
       },
       {
         type: "list",
